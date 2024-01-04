@@ -1,0 +1,110 @@
+<!-- paymentlog-table.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add necessary styles or meta tags if needed -->
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+        }
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            max-width: 300px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px; /* Adjust the font size */
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px; /* Adjust the font size */
+        }
+    </style>
+</head>
+<body>
+    <h2>Payment Log</h2>
+    <!-- Add a form with an input field for dynamic value -->
+    <form id="paymentLogForm">
+        <label for="paymentLogIdInput">Enter Client ID:</label>
+        <input type="text" id="paymentLogIdInput" name="paymentLogIdInput" required>
+        <button type="button" onclick="fetchPaymentLog()">Fetch Payment Log</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Payment ID</th>
+                <th>Client ID</th>
+                <th>Transaction Type</th>
+                <th>Transaction Amount</th>
+                <!-- Add more columns based on your data -->
+            </tr>
+        </thead>
+        <tbody id="paymentlogbody">
+            <!-- Payment log data will be dynamically added here -->
+        </tbody>
+    </table>
+    
+    <script>
+        function fetchPaymentLog() {
+            // Get the paymentLogId from the input field
+            const paymentLogId = parseInt(document.getElementById('paymentLogIdInput').value, 10);
+            
+            if (isNaN(paymentLogId)) {
+                console.error('Invalid Client ID:', document.getElementById('paymentLogIdInput').value);
+                return;
+            }
+
+            // Fetch payment logs based on the specified client ID
+            fetch(`http://localhost:8000/paymentlog/client/${paymentLogId}`)
+                .then(response => response.json())
+                .then(paymentLogs => {
+                    console.log('Response from server:', paymentLogs);
+
+                    const paymentLogBody = document.getElementById('paymentlogbody');
+                    paymentLogBody.innerHTML = ''; // Clear previous content
+
+                    paymentLogs.forEach(paymentLog => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${paymentLog.pid}</td>
+                            <td>${paymentLog.cid}</td>
+                            <td>${paymentLog.trans_type}</td>
+                            <td>${paymentLog.trans_amt}</td>
+                            <!-- Add more cells based on your data -->
+                        `;
+                        paymentLogBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching payment logs:', error);
+                });
+        }
+    </script>
+</body>
+</html>

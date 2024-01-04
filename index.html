@@ -1,0 +1,75 @@
+<!-- main.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeatSync Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+        }
+        main {
+            margin: 20px;
+        }
+        iframe {
+            width: 100%;
+            height: 500px; /* Set an appropriate height for your components */
+            border: none;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SeatSync Dashboard</h1>
+    </header>
+    <main>
+        <button onclick="loadClientsTable()">Clients Data</button>
+        <button onclick="loadTravelLogsTable()">Travel Logs</button>
+        <button onclick="loadPaymentLogTable()">Payment Data</button>
+        <button onclick="loadSeatForm()">Seat Data</button>
+
+        <iframe id="iframeContainer" src="" style="display: none;"></iframe>
+    </main>
+
+    <script>
+        function loadClientsTable() {
+            document.getElementById('iframeContainer').src = 'client.html';
+            document.getElementById('iframeContainer').style.display = 'block';
+        }
+
+        function loadTravelLogsTable() {
+            document.getElementById('iframeContainer').src = 'travel_log.html';
+            document.getElementById('iframeContainer').style.display = 'block';
+        }
+
+        function loadPaymentLogTable() {
+            document.getElementById('iframeContainer').src = 'payment_log_cid.html';
+            document.getElementById('iframeContainer').style.display = 'block';
+        }
+
+        function loadSeatForm() {
+            document.getElementById('iframeContainer').src = 'seat.html';
+            document.getElementById('iframeContainer').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

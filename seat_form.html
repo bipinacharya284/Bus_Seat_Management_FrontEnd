@@ -1,0 +1,98 @@
+<!-- seat-form.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Add necessary styles or meta tags if needed -->
+    <style>
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            max-width: 300px;
+        }
+
+        input,
+        select,
+        button {
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Insert Seat</h2>
+    <form id="seatForm">
+        <label for="seatname">Seat Name:</label>
+        <input type="text" id="seatname" name="seatname" required>
+    
+        <label for="seattype">Seat Type:</label>
+        <select id="seattype" name="seattype" required>
+            <!-- Add options based on your seat types -->
+            <option value="Ordinary">Ordinary</option>
+            <option value="Women">Women</option>
+            <option value="Senior">Senior Citizen</option>
+            <!-- Add more options as needed -->
+        </select>
+    
+        <button type="button" onclick="insertSeat()">Insert Seat</button>
+    </form>
+    
+
+    <!-- Add more sections for displaying success messages or errors -->
+
+    <script>
+        document.getElementById('seatForm').addEventListener('submit', function (event) {
+            event.preventDefault();  // Prevent the form from submitting in the traditional way
+            insertSeat();  // Call your function to handle the form data
+        });
+
+        function insertSeat() {
+    // Get form values
+    const seatname = document.getElementById('seatname').value;
+    const seattype = document.getElementById('seattype').value;
+
+    // Prepare data for sending to the server
+    const data = {
+        "query": {
+            "seatname": seatname,
+            "seattype": seattype
+        }
+    };
+
+    // Make a POST request to the server to insert the seat
+    fetch('http://localhost:8000/seat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log('Seat insertion result:', result);
+
+        // Optionally, display success message or handle the result as needed
+        // For example, you can reset the form or show a success notification
+        document.getElementById('seatForm').reset();
+        alert('Seat inserted successfully!');
+    })
+    .catch(error => {
+        console.error('Error inserting seat:', error);
+        // Handle errors, display error messages, etc.
+        // For example, you can show an error notification
+        alert('Error inserting seat. Please try again.');
+    });
+}
+
+    </script>
+</body>
+
+</html>

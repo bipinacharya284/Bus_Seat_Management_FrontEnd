@@ -1,0 +1,64 @@
+<!-- travellogs-table.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add necessary styles or meta tags if needed -->
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+        }
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h2>Seats</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Seat ID</th>
+                <th>Seat Name</th>
+                <th>Seat Type</th>
+                <th>Is Occupied</th>
+                <!-- Add more columns based on your data -->
+            </tr>
+        </thead>
+        <tbody id="seatTableBody">
+            <!-- Travel log data will be dynamically added here -->
+        </tbody>
+    </table>
+    <script>
+        // Fetch and display clients
+        fetch('http://localhost:8000/getallseat/')  // Assuming the backend API is on the same domain
+            .then(response => response.json())
+            .then(clients => {
+                const clientsTableBody = document.getElementById('seatTableBody');
+                clients.forEach(client => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${client.sid}</td>
+                        <td>${client.seatname}</td>
+                        <td>${client.seattype}</td>
+                        <td>${client.isfree}</td>
+
+                    `;
+                    clientsTableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching clients:', error);
+            });
+    </script>
+</body>
+</html>
