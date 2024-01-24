@@ -41,7 +41,7 @@
     </table>
     <script>
         // Fetch and display clients
-        fetch('http://localhost:8000/travellog/')  // Assuming the backend API is on the same domain
+        fetch('https://busseatbackend.onrender.com/travellog/')  // Assuming the backend API is on the same domain
             .then(response => response.json())
             .then(clients => {
                 const clientsTableBody = document.getElementById('travelTableBody');

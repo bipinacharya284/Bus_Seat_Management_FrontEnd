@@ -81,7 +81,7 @@
             }
 
             // Fetch payment logs based on the specified client ID
-            fetch(`http://localhost:8000/paymentlog/client/${paymentLogId}`)
+            fetch(`https://busseatbackend.onrender.com/paymentlog/client/${paymentLogId}`)
                 .then(response => response.json())
                 .then(paymentLogs => {
                     console.log('Response from server:', paymentLogs);
